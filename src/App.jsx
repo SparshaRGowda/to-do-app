@@ -9,13 +9,35 @@ function App() {
 
   function createNewNote() {
     setNotesdata((prev) => [
-      ...prev,
       {
         id: Date.now(),
         info: title,
+        completed: false,
       },
+      ...prev,
     ]);
     setTitle("");
+  }
+
+  function editNote(getId, getInfo) {
+    setNotesdata((prevData) =>
+      prevData.map((item) =>
+        item.id === getId ? { ...item, info: getInfo } : item
+      )
+    );
+  }
+
+  function deleteNote(id) {
+    const filtered = notesData.filter((item) => item.id !== id);
+    setNotesdata(filtered);
+  }
+
+  function completeNote(id) {
+    setNotesdata((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, completed: !item.completed } : item
+      )
+    );
   }
 
   return (
@@ -36,7 +58,12 @@ function App() {
         </button>
       </div>
       <div className="flex flex-col items-center gap-5">
-        <AllNotes notesData={notesData} />
+        <AllNotes
+          notesData={notesData}
+          editNote={editNote}
+          deleteNote={deleteNote}
+          completeNote={completeNote}
+        />
       </div>
     </div>
   );

@@ -7,7 +7,8 @@ function App() {
 
   const [title, setTitle] = useState("");
 
-  function createNewNote() {
+  function createNewNote(e) {
+    e.preventDefault();
     setNotesdata((prev) => [
       {
         id: Date.now(),
@@ -42,7 +43,10 @@ function App() {
 
   return (
     <div className="flex flex-col justify-center">
-      <div className="flex justify-center gap-5 m-10">
+      <form
+        onSubmit={(e) => createNewNote(e)}
+        className="flex justify-center gap-5 m-10"
+      >
         <input
           type="text"
           value={title}
@@ -51,12 +55,12 @@ function App() {
           className="border-2 border-emerald-950 h-10 w-1/2 p-2"
         />
         <button
-          onClick={() => createNewNote()}
+          // onClick={() => createNewNote()}
           className="bg-lime-700 w-20 rounded-md"
         >
           Add
         </button>
-      </div>
+      </form>
       <div className="flex flex-col items-center gap-5">
         <AllNotes
           notesData={notesData}
